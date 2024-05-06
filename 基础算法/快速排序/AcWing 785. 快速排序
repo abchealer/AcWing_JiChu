@@ -1,0 +1,31 @@
+```cpp
+#include <iostream>
+using namespace std;
+const int N=1e6+10;
+int q[N];
+int n;
+void quick_sort(int q[],int l, int r){
+    if(l==r) return ;
+//如果每次都选取数组最左边的元素来作为pivot，当数组有序的时每次递归数组的长度只会减少一，导致时间复杂度变为 𝑂(𝑛2)(超时)，这可以通过选中间元素作为pivot或者每次随机选取数组中一个元素与最左边的元素交换来解决。注意这里不能用最右边的元素作为pivot，这样如果数组最右边是最大元素的话会导致划分完[l, j]不变导致死循环。
+    int x=q[(l+r)/2], i=l-1,j=r+1;
+    while(i<j){
+        do i++;while(q[i]<x);
+        do j--;while(q[j]>x);
+        if(i<j) swap(q[i], q[j]);
+    }
+    quick_sort(q,l,j);
+    quick_sort(q,j+1,r);
+}
+int main(){
+    scanf("%d", &n);
+    for(int i=0;i<n;i++){
+        scanf("%d", &q[i]);
+    }
+    quick_sort(q, 0, n-1);
+    for(int i=0;i<n;i++){
+        printf("%d ", q[i]);
+    }
+    
+    return 0;
+}
+```
