@@ -1,0 +1,38 @@
+#include <iostream>
+#include <vector>
+#include <math.h>
+#include <algorithm>
+using namespace std;
+const int N=100010;
+typedef pair<int,int>pii;
+vector<pii> a,res;
+void merge(vector<pii> &a){
+    sort(a.begin(),a.end());
+    int st=-2e9,ed=-2e9;
+    for(auto t:a){
+        if(ed<t.first){
+            if(st!=2e9) res.push_back({st,ed});
+            st=t.first;
+            ed=t.second;
+        }
+        else ed=max(ed,t.second);
+    }
+    if(st!= -2e9) res.push_back({st,ed});
+    a=res;
+    
+}
+int main(){
+    
+    int n;
+    int l, r;
+    cin>>n;
+    while(n--){
+        cin>>l>>r;
+        a.push_back({l,r});
+    }
+    merge(a);
+    cout<<a.size()-1;
+    
+    
+    return 0;
+}
